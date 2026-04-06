@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kat'Delizia — Food Truck Familial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ===== CURSEUR PERSONNALISÉ ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --vert: #2D5A27;
+    --vert-clair: #4A7C3F;
+    --vert-sauge: #7A9E6E;
+    --vert-pale: #C8DDB8;
+    --vert-bg: #EEF5E8;
+    --noir: #1A1A1A;
+    --noir-doux: #2C2C2C;
+    --creme: #F7F3EC;
+    --ocre: #C8A45A;
+    --rouge-doux: #B85C5C;
+    --font-titre: 'Playfair Display', Georgia, serif;
+    --font-corps: 'Lora', Georgia, serif;
+    --font-accent: 'Crimson Text', Georgia, serif;
+  }
+
+  html { cursor: none; scroll-behavior: smooth; }
+  body {
+    background: var(--creme);
+    color: var(--noir);
+    font-family: var(--font-corps);
+    overflow-x: hidden;
+  }
+
+  /* Curseur feuille */
+  #cursor {
+    width: 32px; height: 32px;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+  #cursor svg { width: 100%; height: 100%; }
+  #cursor-dot {
+    width: 6px; height: 6px;
+    background: var(--vert);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ===== HEADER / NAV ===== */
+  header {
+    background: var(--noir);
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 3px solid var(--vert-clair);
+  }
+  nav {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.8rem;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 42px; height: 42px; }
+  .nav-logo-text {
+    font-family: var(--font-titre);
+    font-size: 1.3rem; font-weight: 700;
+    color: #fff; letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+  .nav-logo-text span { color: var(--vert-sauge); font-style: italic; font-weight: 400; font-size: 0.75rem; display: block; }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: #ccc; text-decoration: none;
+    font-family: var(--font-accent); font-size: 1rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--vert-sauge); }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--noir);
+    min-height: 92vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 5rem 5rem;
+    position: relative; z-index: 2;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--vert);
+    color: #fff;
+    font-family: var(--font-accent); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--font-titre);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.05; margin-bottom: 0.3rem;
+  }
+  .hero h1 em { color: var(--vert-sauge); font-style: italic; }
+  .hero-sub {
+    font-family: var(--font-titre); font-style: italic;
+    font-size: 1.2rem; color: var(--vert-pale);
+    margin-bottom: 1.8rem;
+  }
+  .hero-desc {
+    color: #aaa; font-size: 1rem; line-height: 1.7;
+    max-width: 420px; margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--vert); color: #fff;
+    padding: 0.9rem 2.2rem; border-radius: 3px;
+    font-family: var(--font-accent); font-weight: 600; font-size: 1rem;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 2px solid var(--vert);
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: transparent; color: var(--vert-sauge); border-color: var(--vert-sauge); }
+  .btn-secondary {
+    background: transparent; color: #ddd;
+    padding: 0.9rem 2.2rem; border-radius: 3px;
+    font-family: var(--font-accent); font-weight: 600; font-size: 1rem;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 2px solid #444;
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--vert-sauge); color: var(--vert-sauge); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.55) saturate(0.8);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--noir) 0%, transparent 50%);
+  }
+
+  /* Feuilles décoratives hero */
+  .hero-deco {
+    position: absolute; bottom: 0; right: 0;
+    width: 250px; opacity: 0.12; pointer-events: none;
+  }
+
+  /* ===== SECTION : NOTRE HISTOIRE ===== */
+  .histoire {
+    background: var(--vert-bg);
+    padding: 6rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .histoire::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--vert) 0 20px, transparent 20px 30px);
+  }
+  .histoire-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .histoire-text h2 {
+    font-family: var(--font-titre); font-size: 2.6rem; font-weight: 700;
+    color: var(--noir); line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .histoire-text h2 em { color: var(--vert); }
+  .histoire-text .trait {
+    width: 60px; height: 3px; background: var(--vert);
+    margin: 1.2rem 0; border-radius: 2px;
+  }
+  .histoire-text p {
+    color: var(--noir-doux); line-height: 1.85; font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+  }
+  .histoire-valeurs {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .valeur-card {
+    background: #fff; border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    border-left: 4px solid var(--vert);
+    box-shadow: 0 2px 12px rgba(45,90,39,0.08);
+  }
+  .valeur-card h3 {
+    font-family: var(--font-titre); font-size: 1.05rem; font-weight: 700;
+    color: var(--vert); margin-bottom: 0.3rem;
+  }
+  .valeur-card p { font-size: 0.92rem; color: #666; line-height: 1.6; }
+
+  /* ===== SECTION : MENU ===== */
+  .menu {
+    background: var(--noir);
+    padding: 6rem 2rem;
+    position: relative;
+  }
+  .menu-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-header .eyebrow {
+    font-family: var(--font-accent); font-size: 0.85rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--vert-sauge); margin-bottom: 0.7rem; display: block;
+  }
+  .section-header h2 {
+    font-family: var(--font-titre); font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; color: #fff; line-height: 1.15;
+  }
+  .section-header h2 em { color: var(--vert-sauge); font-style: italic; }
+  .section-header p { color: #888; margin-top: 1rem; font-size: 1rem; }
+
+  .menu-tabs {
+    display: flex; gap: 0.5rem; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 3rem;
+  }
+  .tab-btn {
+    background: transparent; border: 2px solid #333;
+    color: #888; padding: 0.6rem 1.6rem; border-radius: 30px;
+    font-family: var(--font-accent); font-size: 0.9rem; font-weight: 600;
+    cursor: none; transition: all 0.2s; letter-spacing: 0.04em;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--vert); border-color: var(--vert); color: #fff;
+  }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;
+  }
+  .menu-item {
+    background: #1E1E1E; border-radius: 8px;
+    padding: 1.5rem; border: 1px solid #2a2a2a;
+    transition: border-color 0.2s, transform 0.2s;
+    display: none;
+  }
+  .menu-item.visible { display: block; }
+  .menu-item:hover { border-color: var(--vert); transform: translateY(-2px); }
+  .menu-item-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .menu-item h3 {
+    font-family: var(--font-titre); font-size: 1.05rem; font-weight: 700;
+    color: #fff;
+  }
+  .menu-price {
+    font-family: var(--font-titre); font-size: 1.1rem; font-weight: 700;
+    color: var(--vert-sauge);
+  }
+  .menu-item p { font-size: 0.88rem; color: #777; line-height: 1.5; font-style: italic; }
+  .menu-cat-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 0.8rem;
+  }
+  .badge-panuozzo { background: rgba(74,124,63,0.2); color: var(--vert-sauge); }
+  .badge-burger { background: rgba(184,92,92,0.2); color: #d47a7a; }
+  .badge-sandwich { background: rgba(200,164,90,0.2); color: var(--ocre); }
+  .badge-salade { background: rgba(45,90,39,0.3); color: #8bc47a; }
+  .badge-frites { background: rgba(150,150,50,0.2); color: #c8c850; }
+  .badge-tenders { background: rgba(180,120,60,0.2); color: #d4954a; }
+  .badge-boisson { background: rgba(60,120,180,0.2); color: #7ab4d4; }
+  .badge-dessert { background: rgba(180,60,120,0.2); color: #d47aaa; }
+
+  /* ===== SECTION : AMBIANCE ===== */
+  .ambiance {
+    background: var(--creme); padding: 6rem 2rem;
+  }
+  .ambiance-inner {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .ambiance-inner .section-header h2 { color: var(--noir); }
+  .ambiance-inner .section-header h2 em { color: var(--vert); }
+  .ambiance-inner .section-header p { color: #666; }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    margin-top: 1rem;
+  }
+  .feature-card {
+    text-align: center; padding: 2.5rem 1.5rem;
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--vert);
+    transition: transform 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); }
+  .feature-icon {
+    width: 60px; height: 60px; margin: 0 auto 1.2rem;
+    background: var(--vert-bg); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feature-icon svg { width: 28px; height: 28px; }
+  .feature-card h3 {
+    font-family: var(--font-titre); font-size: 1.15rem; font-weight: 700;
+    color: var(--noir); margin-bottom: 0.6rem;
+  }
+  .feature-card p { color: #777; font-size: 0.92rem; line-height: 1.65; }
+
+  /* ===== SECTION : LIVRAISON / HORAIRES ===== */
+  .infos {
+    background: var(--vert);
+    padding: 5rem 2rem;
+  }
+  .infos-inner {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center;
+  }
+  .infos h2 {
+    font-family: var(--font-titre); font-size: 2.2rem; font-weight: 700;
+    color: #fff; margin-bottom: 1rem; line-height: 1.2;
+  }
+  .infos p { color: var(--vert-pale); line-height: 1.7; margin-bottom: 1rem; font-size: 1rem; }
+  .infos .livraison-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(255,255,255,0.15); color: #fff;
+    padding: 0.6rem 1.2rem; border-radius: 30px; font-size: 0.9rem;
+    font-family: var(--font-accent); font-weight: 600;
+  }
+  .horaires-card {
+    background: #fff; border-radius: 10px; padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .horaires-card h3 {
+    font-family: var(--font-titre); font-size: 1.3rem; font-weight: 700;
+    color: var(--vert); margin-bottom: 1.2rem;
+  }
+  .horaire-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.7rem 0; border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+  }
+  .horaire-row:last-child { border-bottom: none; }
+  .horaire-row .jour { color: var(--noir); font-weight: 600; font-family: var(--font-accent); }
+  .horaire-row .heure { color: var(--vert); font-family: var(--font-titre); font-weight: 600; }
+  .horaire-row .fermé { color: #bbb; }
+
+  /* ===== CONTACT ===== */
+  .contact {
+    background: var(--noir-doux); padding: 5rem 2rem;
+  }
+  .contact-inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .contact h2 {
+    font-family: var(--font-titre); font-size: 2.2rem; font-weight: 700;
+    color: #fff; margin-bottom: 1rem;
+  }
+  .contact h2 em { color: var(--vert-sauge); font-style: italic; }
+  .contact p { color: #999; margin-bottom: 2rem; line-height: 1.7; }
+  .contact-cards {
+    display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .contact-card {
+    background: #1a1a1a; border-radius: 8px; padding: 1.5rem 2rem;
+    border: 1px solid #333; min-width: 200px;
+  }
+  .contact-card .label {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--vert-sauge); font-family: var(--font-accent); font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .contact-card .value {
+    color: #fff; font-size: 1rem; font-family: var(--font-titre); font-weight: 600;
+  }
+  .socials { display: flex; gap: 1rem; justify-content: center; }
+  .social-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--vert); color: #fff;
+    padding: 0.7rem 1.5rem; border-radius: 4px;
+    text-decoration: none; font-family: var(--font-accent); font-weight: 600;
+    font-size: 0.9rem; transition: background 0.2s;
+  }
+  .social-link:hover { background: var(--vert-clair); }
+  .social-link svg { width: 18px; height: 18px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #111; padding: 2rem;
+    text-align: center; border-top: 1px solid #222;
+  }
+  footer p { color: #555; font-size: 0.85rem; }
+  footer strong { color: var(--vert-sauge); }
+
+  /* ===== ANIMATIONS SCROLL ===== */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== SIDEBAR GAUCHE ===== */
+  .hero {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 1fr !important;
+  }
+  .hero-sidebar {
+    background: #111;
+    border-right: 1px solid #2a2a2a;
+    display: flex; flex-direction: column;
+    padding: 3rem 1.8rem;
+    justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .hero-sidebar::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--vert);
+  }
+  .sidebar-tag {
+    font-family: var(--font-accent); font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--vert-sauge); margin-bottom: 0.5rem;
+  }
+  .sidebar-quote {
+    font-family: var(--font-titre); font-style: italic;
+    font-size: 1.1rem; color: #ddd; line-height: 1.6;
+    border-left: 3px solid var(--vert);
+    padding-left: 1rem; margin: 1.5rem 0;
+  }
+  .sidebar-quote cite {
+    display: block; font-style: normal; font-size: 0.8rem;
+    color: var(--vert-sauge); margin-top: 0.5rem;
+    font-family: var(--font-accent);
+  }
+  .sidebar-stats {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .stat-item {
+    border-bottom: 1px solid #222; padding-bottom: 1.2rem;
+  }
+  .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .stat-num {
+    font-family: var(--font-titre); font-size: 2rem; font-weight: 700;
+    color: var(--vert-sauge); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem; color: #777; margin-top: 0.2rem;
+    font-family: var(--font-accent); letter-spacing: 0.05em;
+  }
+  .sidebar-adresse {
+    margin-top: 1.5rem;
+    font-size: 0.82rem; color: #555; line-height: 1.7;
+    font-family: var(--font-accent);
+  }
+  .sidebar-adresse strong { color: var(--vert-sauge); display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .sidebar-deco-leaf {
+    position: absolute; bottom: 20px; right: -10px;
+    opacity: 0.06; transform: rotate(15deg);
+    pointer-events: none;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr !important; }
+    .hero-right { display: none; }
+    .hero-sidebar { display: none; }
+    .hero-left { padding: 4rem 2rem; }
+    .histoire-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .infos-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSEUR -->
+<div id="cursor">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C14 8 6 10 6 18C6 24 10.5 30 16 30C21.5 30 26 24 26 18C26 10 18 8 16 2Z" fill="#2D5A27"/>
+    <path d="M16 8C15 12 11 14 11 20C11 23 13 26 16 26" stroke="#7A9E6E" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+</div>
+<div id="cursor-dot"></div>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#" class="nav-logo">
+      <!-- LOGO KD -->
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fond cercle vert foncé -->
+        <circle cx="26" cy="26" r="25" fill="#1A3D14"/>
+        <!-- Bordure fine -->
+        <circle cx="26" cy="26" r="23" fill="none" stroke="#4A7C3F" stroke-width="0.8" opacity="0.6"/>
+        <!-- Lettre K -->
+        <text x="8" y="36" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="-1">K</text>
+        <!-- Lettre D en vert sauge -->
+        <text x="26" y="36" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#7A9E6E" font-style="italic">D</text>
+        <!-- Petite feuille déco en haut à droite -->
+        <path d="M43 10 C42 13 39 14 39 17 C39 19 41 20 43 20 C45 20 47 19 47 17 C47 14 44 13 43 10Z" fill="#4A7C3F" opacity="0.8"/>
+        <line x1="43" y1="10.5" x2="43" y2="19.5" stroke="#7A9E6E" stroke-width="0.7" stroke-linecap="round"/>
+      </svg>
+      <div class="nav-logo-text">
+        Kat'Delizia
+        <span>Food Truck & Saveurs</span>
+      </div>
+    </a>
+    <ul>
+      <li><a href="#histoire">Notre histoire</a></li>
+      <li><a href="#menu">La carte</a></li>
+      <li><a href="#infos">Livraison</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- SIDEBAR GAUCHE (visible PC uniquement) -->
+  <aside class="hero-sidebar">
+    <div>
+      <p class="sidebar-tag">🍃 Notre engagement</p>
+      <blockquote class="sidebar-quote">
+        "On cuisine comme si vous étiez à notre table — avec amour, des produits frais et une bonne dose de générosité."
+        <cite>— La famille Kat'Delizia</cite>
+      </blockquote>
+    </div>
+    <div class="sidebar-stats">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Produits frais chaque jour</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+20</div>
+        <div class="stat-label">Recettes sur la carte</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0€</div>
+        <div class="stat-label">Frais de livraison dès 10€</div>
+      </div>
+    </div>
+    <div class="sidebar-adresse">
+      <strong>📍 Nous trouver</strong>
+      105b av Abel Gance<br>La Garde<br>
+      <br>
+      <strong>📞 Commander</strong>
+      06.04.07.45.81
+    </div>
+    <!-- feuille déco -->
+    <svg class="sidebar-deco-leaf" width="120" height="180" viewBox="0 0 120 180" fill="none">
+      <path d="M60 0 C50 30 10 50 10 90 C10 130 35 170 60 180 C85 170 110 130 110 90 C110 50 70 30 60 0Z" fill="#4A7C3F"/>
+    </svg>
+  </aside>
+
+  <div class="hero-left">
+    <span class="hero-badge">🍃 Tout nos produits sont frais</span>
+    <h1>Kat'<em>Delizia</em></h1>
+    <p class="hero-sub">La cuisine qui rassemble la famille</p>
+    <p class="hero-desc">
+      Depuis notre food truck, nous vous préparons chaque jour des panuozzos, burgers et sandwichs avec les meilleurs produits frais. Une cuisine faite avec le cœur, comme à la maison.
+    </p>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-primary">Voir la carte</a>
+      <a href="#infos" class="btn-secondary">Commander</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <!-- Panneau visuel droit : ambiance food truck illustrée -->
+    <div style="width:100%; height:100%; background:#0d1a0c; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:3rem 2.5rem; gap:2rem; position:relative; overflow:hidden;">
+
+      <!-- Fond déco feuilles -->
+      <svg style="position:absolute;top:0;right:0;opacity:0.06;pointer-events:none;" width="300" height="300" viewBox="0 0 300 300" fill="none">
+        <path d="M300 0 C250 50 200 80 200 150 C200 220 250 260 300 300 Z" fill="#4A7C3F"/>
+      </svg>
+      <svg style="position:absolute;bottom:0;left:0;opacity:0.06;pointer-events:none;" width="200" height="200" viewBox="0 0 200 200" fill="none">
+        <path d="M0 200 C40 160 60 120 60 100 C60 60 30 20 0 0 Z" fill="#4A7C3F"/>
+      </svg>
+
+      <!-- LOGO KD grand -->
+      <div style="text-align:center; margin-bottom:0.5rem;">
+        <svg viewBox="0 0 180 180" width="160" height="160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cercle principal -->
+          <circle cx="90" cy="90" r="88" fill="#1A3D14"/>
+          <circle cx="90" cy="90" r="82" fill="none" stroke="#4A7C3F" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="90" cy="90" r="75" fill="none" stroke="#2D5A27" stroke-width="0.8" opacity="0.4"/>
+          <!-- Couronne de feuilles -->
+          <g opacity="0.35">
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(45 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(90 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(135 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(180 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(225 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(270 90 90)"/>
+            <path d="M90 8 C88 16 82 19 82 27 C82 32 86 35 90 35 C94 35 98 32 98 27 C98 19 92 16 90 8Z" fill="#7A9E6E" transform="rotate(315 90 90)"/>
+          </g>
+          <!-- K -->
+          <text x="22" y="122" font-family="Georgia, serif" font-size="90" font-weight="700" fill="#ffffff">K</text>
+          <!-- D italic vert -->
+          <text x="82" y="122" font-family="Georgia, serif" font-size="90" font-weight="700" fill="#7A9E6E" font-style="italic">D</text>
+          <!-- Ligne déco bas -->
+          <line x1="35" y1="132" x2="145" y2="132" stroke="#4A7C3F" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="90" cy="132" r="3" fill="#7A9E6E"/>
+          <!-- Sous-texte -->
+          <text x="90" y="152" font-family="Georgia, serif" font-size="13" fill="#7A9E6E" text-anchor="middle" letter-spacing="5" font-style="italic">KAT'DELIZIA</text>
+        </svg>
+      </div>
+
+      <!-- Séparateur -->
+      <div style="width:60px; height:2px; background:linear-gradient(to right, transparent, #4A7C3F, transparent);"></div>
+
+      <!-- Cards spécialités -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; width:100%; max-width:380px;">
+        <div style="background:rgba(255,255,255,0.04); border:1px solid #2a3a2a; border-radius:8px; padding:1rem; border-left:3px solid #4A7C3F;">
+          <div style="font-family:'Crimson Text',serif; font-size:0.7rem; color:#7A9E6E; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem;">Signature</div>
+          <div style="font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:#fff;">Panuozzo</div>
+          <div style="font-size:0.78rem; color:#666; margin-top:0.2rem;">dès 10€</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid #2a3a2a; border-radius:8px; padding:1rem; border-left:3px solid #C8A45A;">
+          <div style="font-family:'Crimson Text',serif; font-size:0.7rem; color:#C8A45A; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem;">Populaire</div>
+          <div style="font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:#fff;">Burgers</div>
+          <div style="font-size:0.78rem; color:#666; margin-top:0.2rem;">dès 5.50€</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid #2a3a2a; border-radius:8px; padding:1rem; border-left:3px solid #7A9E6E;">
+          <div style="font-family:'Crimson Text',serif; font-size:0.7rem; color:#7A9E6E; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem;">Frais</div>
+          <div style="font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:#fff;">Salades</div>
+          <div style="font-size:0.78rem; color:#666; margin-top:0.2rem;">dès 8€</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid #2a3a2a; border-radius:8px; padding:1rem; border-left:3px solid #B85C5C;">
+          <div style="font-family:'Crimson Text',serif; font-size:0.7rem; color:#d47a7a; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem;">Gourmand</div>
+          <div style="font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:#fff;">Tenders</div>
+          <div style="font-size:0.78rem; color:#666; margin-top:0.2rem;">dès 3.50€</div>
+        </div>
+      </div>
+
+      <!-- Badge livraison -->
+      <div style="background:rgba(45,90,39,0.25); border:1px solid #4A7C3F; border-radius:30px; padding:0.6rem 1.4rem; display:flex; align-items:center; gap:0.6rem;">
+        <span style="font-size:14px;">🛵</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.9rem; color:#C8DDB8; font-weight:600;">Livraison gratuite dès 10€</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTOIRE -->
+<section class="histoire" id="histoire">
+  <div class="histoire-inner">
+    <div class="histoire-text reveal">
+      <h2>Une affaire de <em>famille</em></h2>
+      <div class="trait"></div>
+      <p>
+        Kat'Delizia, c'est avant tout une famille passionnée qui a décidé de partager sa table avec vous. Derrière ce food truck, il y a une histoire d'amour pour la bonne cuisine, les produits frais et les moments partagés.
+      </p>
+      <p>
+        Chaque recette est préparée avec soin, comme on le ferait chez soi pour les gens qu'on aime. Des panuozzos généreux aux burgers fondants, tout est cuisiné au moment pour vous offrir le meilleur.
+      </p>
+      <p>
+        Nous croyons que la nourriture rassemble — c'est pour ça qu'on met tout notre cœur dans chaque assiette.
+      </p>
+    </div>
+    <div class="histoire-valeurs reveal">
+      <div class="valeur-card">
+        <h3>🌿 Produits frais</h3>
+        <p>Tous nos ingrédients sont sélectionnés chaque jour pour garantir fraîcheur et saveur.</p>
+      </div>
+      <div class="valeur-card">
+        <h3>🏠 Fait maison</h3>
+        <p>Nos recettes sont élaborées en famille, avec des préparations maison et des sauces artisanales.</p>
+      </div>
+      <div class="valeur-card">
+        <h3>❤️ Avec le cœur</h3>
+        <p>On cuisine comme si vous étiez des invités chez nous — avec générosité et bienveillance.</p>
+      </div>
+      <div class="valeur-card">
+        <h3>🚴 Livraison gratuite</h3>
+        <p>Livraison offerte à partir de 10€ pour profiter de nos spécialités chez vous.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-inner">
+    <div class="section-header reveal">
+      <span class="eyebrow">🍽 La carte</span>
+      <h2>Nos <em>spécialités</em></h2>
+      <p>Des recettes généreuses, préparées minute avec des produits frais</p>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="tab-btn active" data-cat="all">Tout voir</button>
+      <button class="tab-btn" data-cat="panuozzo">Panuozzo</button>
+      <button class="tab-btn" data-cat="burger">Burgers</button>
+      <button class="tab-btn" data-cat="sandwich">Sandwichs</button>
+      <button class="tab-btn" data-cat="salade">Salades</button>
+      <button class="tab-btn" data-cat="frites">Frites</button>
+      <button class="tab-btn" data-cat="tenders">Tenders</button>
+      <button class="tab-btn" data-cat="boisson">Boissons</button>
+      <button class="tab-btn" data-cat="dessert">Desserts</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+      <!-- PANUOZZO -->
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Poulet</h3><span class="menu-price">10€</span></div>
+        <p>Poulets, champignons, lard, emmental, crudités</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Burger</h3><span class="menu-price">12€</span></div>
+        <p>Double steak, bacon, cheddar, crudités, sauce burger</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Bœuf</h3><span class="menu-price">11€</span></div>
+        <p>Steak, lard, raclette, frites, crudités, oignons caramélisés</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Chorizo</h3><span class="menu-price">10.50€</span></div>
+        <p>Poulet, chorizo, poivron, cheddar, oignons caramélisés, sauce barbecue</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Roquefort</h3><span class="menu-price">10€</span></div>
+        <p>Steak, bacon, roquefort, frites</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Jambon Cru</h3><span class="menu-price">10€</span></div>
+        <p>Crudités, jambon, mozza, crème balsamique</p>
+      </div>
+      <div class="menu-item visible" data-cat="panuozzo">
+        <span class="menu-cat-badge badge-panuozzo">Panuozzo</span>
+        <div class="menu-item-header"><h3>Végétarien</h3><span class="menu-price">10€</span></div>
+        <p>Courgette, oignons caramélisés, tomates, roquefort</p>
+      </div>
+
+      <!-- BURGERS -->
+      <div class="menu-item visible" data-cat="burger">
+        <span class="menu-cat-badge badge-burger">Burger</span>
+        <div class="menu-item-header"><h3>Classico</h3><span class="menu-price">5.50€</span></div>
+        <p>Steak, bacon, cheddar, crudités</p>
+      </div>
+      <div class="menu-item visible" data-cat="burger">
+        <span class="menu-cat-badge badge-burger">Burger</span>
+        <div class="menu-item-header"><h3>Big Steak</h3><span class="menu-price">9€</span></div>
+        <p>Double steak, lard, cheddar, oignon frit</p>
+      </div>
+      <div class="menu-item visible" data-cat="burger">
+        <span class="menu-cat-badge badge-burger">Burger</span>
+        <div class="menu-item-header"><h3>Chèvro</h3><span class="menu-price">7.50€</span></div>
+        <p>Poulet, chèvre, miel, crudités, oignons caramélisés</p>
+      </div>
+      <div class="menu-item visible" data-cat="burger">
+        <span class="menu-cat-badge badge-burger">Burger</span>
+        <div class="menu-item-header"><h3>Montagnard</h3><span class="menu-price">8.50€</span></div>
+        <p>Steak, bacon, raclette, oignons caramélisés</p>
+      </div>
+      <div class="menu-item visible" data-cat="burger">
+        <span class="menu-cat-badge badge-burger">Burger</span>
+        <div class="menu-item-header"><h3>Tartiflette</h3><span class="menu-price">9€</span></div>
+        <p>Steak, tartiflette, lard, crudités, champignons</p>
+      </div>
+
+      <!-- SANDWICHS -->
+      <div class="menu-item visible" data-cat="sandwich">
+        <span class="menu-cat-badge badge-sandwich">Sandwich</span>
+        <div class="menu-item-header"><h3>Américain</h3><span class="menu-price">7€</span></div>
+        <p>Steak, crudités, emmentale ou roquefort</p>
+      </div>
+      <div class="menu-item visible" data-cat="sandwich">
+        <span class="menu-cat-badge badge-sandwich">Sandwich</span>
+        <div class="menu-item-header"><h3>Savoyard</h3><span class="menu-price">8.50€</span></div>
+        <p>Steak, lard, tartiflette, oignons frit</p>
+      </div>
+      <div class="menu-item visible" data-cat="sandwich">
+        <span class="menu-cat-badge badge-sandwich">Sandwich</span>
+        <div class="menu-item-header"><h3>Farmer</h3><span class="menu-price">9€</span></div>
+        <p>Steak, lard, raclette, oignons caramélisés, champignons</p>
+      </div>
+      <div class="menu-item visible" data-cat="sandwich">
+        <span class="menu-cat-badge badge-sandwich">Sandwich</span>
+        <div class="menu-item-header"><h3>L'Indien</h3><span class="menu-price">8€</span></div>
+        <p>Poulet, crudités, oignons caramélisés, poivron, sauce curry</p>
+      </div>
+      <div class="menu-item visible" data-cat="sandwich">
+        <span class="menu-cat-badge badge-sandwich">Sandwich</span>
+        <div class="menu-item-header"><h3>Mexicain</h3><span class="menu-price">8.50€</span></div>
+        <p>Steak, chorizo, poivron, cheddar, oignons frit</p>
+      </div>
+
+      <!-- SALADES -->
+      <div class="menu-item visible" data-cat="salade">
+        <span class="menu-cat-badge badge-salade">Salade</span>
+        <div class="menu-item-header"><h3>Caesar</h3><span class="menu-price">8€</span></div>
+        <p>Poulets, salades, tomates, parmesan, croutons, sauce caesar</p>
+      </div>
+      <div class="menu-item visible" data-cat="salade">
+        <span class="menu-cat-badge badge-salade">Salade</span>
+        <div class="menu-item-header"><h3>L'Italienne</h3><span class="menu-price">8€</span></div>
+        <p>Salades, tomates, burrata, jambon cru</p>
+      </div>
+      <div class="menu-item visible" data-cat="salade">
+        <span class="menu-cat-badge badge-salade">Salade</span>
+        <div class="menu-item-header"><h3>Chèvre Chaud</h3><span class="menu-price">8€</span></div>
+        <p>Salades, tomates, poulets, chèvre chaud</p>
+      </div>
+
+      <!-- FRITES -->
+      <div class="menu-item visible" data-cat="frites">
+        <span class="menu-cat-badge badge-frites">Frites</span>
+        <div class="menu-item-header"><h3>Petites frites</h3><span class="menu-price">2.50€</span></div>
+        <p>La portion idéale pour accompagner</p>
+      </div>
+      <div class="menu-item visible" data-cat="frites">
+        <span class="menu-cat-badge badge-frites">Frites</span>
+        <div class="menu-item-header"><h3>Grandes frites</h3><span class="menu-price">3.50€</span></div>
+        <p>Pour les grandes faims !</p>
+      </div>
+      <div class="menu-item visible" data-cat="frites">
+        <span class="menu-cat-badge badge-frites">Frites</span>
+        <div class="menu-item-header"><h3>Frites Cheddar</h3><span class="menu-price">4€</span></div>
+        <p>Frites nappées de sauce cheddar</p>
+      </div>
+      <div class="menu-item visible" data-cat="frites">
+        <span class="menu-cat-badge badge-frites">Frites</span>
+        <div class="menu-item-header"><h3>Frites Cheddar Bacon</h3><span class="menu-price">5.50€</span></div>
+        <p>Frites, cheddar, oignons frit, bacon</p>
+      </div>
+
+      <!-- TENDERS -->
+      <div class="menu-item visible" data-cat="tenders">
+        <span class="menu-cat-badge badge-tenders">Tenders</span>
+        <div class="menu-item-header"><h3>2 Tenders</h3><span class="menu-price">3.50€</span></div>
+        <p>Tenders de poulet croustillants</p>
+      </div>
+      <div class="menu-item visible" data-cat="tenders">
+        <span class="menu-cat-badge badge-tenders">Tenders</span>
+        <div class="menu-item-header"><h3>4 Tenders</h3><span class="menu-price">7.50€</span></div>
+        <p>La portion partageable</p>
+      </div>
+      <div class="menu-item visible" data-cat="tenders">
+        <span class="menu-cat-badge badge-tenders">Tenders</span>
+        <div class="menu-item-header"><h3>6 Tenders</h3><span class="menu-price">9.50€</span></div>
+        <p>Pour les vrais amateurs</p>
+      </div>
+
+      <!-- BOISSONS -->
+      <div class="menu-item visible" data-cat="boisson">
+        <span class="menu-cat-badge badge-boisson">Boisson</span>
+        <div class="menu-item-header"><h3>Coca Cola 33cl</h3><span class="menu-price">2€</span></div>
+        <p></p>
+      </div>
+      <div class="menu-item visible" data-cat="boisson">
+        <span class="menu-cat-badge badge-boisson">Boisson</span>
+        <div class="menu-item-header"><h3>Orangina / Oasis / Ice Tea</h3><span class="menu-price">2€</span></div>
+        <p>33cl</p>
+      </div>
+      <div class="menu-item visible" data-cat="boisson">
+        <span class="menu-cat-badge badge-boisson">Boisson</span>
+        <div class="menu-item-header"><h3>Eau 50cl</h3><span class="menu-price">1.50€</span></div>
+        <p></p>
+      </div>
+      <div class="menu-item visible" data-cat="boisson">
+        <span class="menu-cat-badge badge-boisson">Boisson</span>
+        <div class="menu-item-header"><h3>Desperados</h3><span class="menu-price">3.50€</span></div>
+        <p></p>
+      </div>
+      <div class="menu-item visible" data-cat="boisson">
+        <span class="menu-cat-badge badge-boisson">Boisson</span>
+        <div class="menu-item-header"><h3>Heineken</h3><span class="menu-price">2.50€</span></div>
+        <p></p>
+      </div>
+
+      <!-- DESSERTS -->
+      <div class="menu-item visible" data-cat="dessert">
+        <span class="menu-cat-badge badge-dessert">Dessert</span>
+        <div class="menu-item-header"><h3>Panuozzo Nutella Banane</h3><span class="menu-price">5€</span></div>
+        <p>Le dessert gourmand qui fait l'unanimité</p>
+      </div>
+      <div class="menu-item visible" data-cat="dessert">
+        <span class="menu-cat-badge badge-dessert">Dessert</span>
+        <div class="menu-item-header"><h3>Tarte du Boulanger</h3><span class="menu-price">3.50€</span></div>
+        <p>Une douceur maison pour finir en beauté</p>
+      </div>
+    </div>
+
+    <!-- Formule -->
+    <div style="margin-top:2.5rem; text-align:center; background:#1a1a1a; border:1px solid var(--vert); border-radius:8px; padding:1.5rem 2rem;">
+      <p style="color:var(--vert-sauge); font-family:var(--font-titre); font-size:1.2rem; font-weight:700; margin-bottom:0.3rem;">🎉 Formule Menu — 3.50€ supplémentaires</p>
+      <p style="color:#888; font-size:0.95rem;">Boisson 33cl + Petites frites avec n'importe quel plat</p>
+    </div>
+  </div>
+</section>
+
+<!-- AMBIANCE -->
+<section class="ambiance" id="ambiance">
+  <div class="ambiance-inner">
+    <div class="section-header reveal">
+      <span class="eyebrow">🚐 Le food truck</span>
+      <h2>Pourquoi on <em>adore</em> ce qu'on fait</h2>
+      <p>Plus qu'un food truck, une expérience familiale et chaleureuse</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 4 C13 8 8 10 8 16 C8 20 11 24 14 24 C17 24 20 20 20 16 C20 10 15 8 14 4Z" fill="#2D5A27"/>
+          </svg>
+        </div>
+        <h3>Fraîcheur garantie</h3>
+        <p>Nos ingrédients arrivent chaque matin. Aucun compromis sur la qualité — c'est notre promesse depuis le début.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="8" fill="none" stroke="#2D5A27" stroke-width="2"/>
+            <path d="M10 14 L13 17 L18 11" stroke="#2D5A27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Fait minute</h3>
+        <p>Chaque commande est préparée à l'instant. Vous recevez toujours quelque chose de chaud et de savoureux.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 6 L16.5 11 L22 11.5 L18 15.5 L19.5 21 L14 18 L8.5 21 L10 15.5 L6 11.5 L11.5 11 Z" fill="#2D5A27"/>
+          </svg>
+        </div>
+        <h3>Recettes signature</h3>
+        <p>Du panuozzo au burger, chaque recette a été pensée et testée en famille avant de rejoindre notre carte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS / HORAIRES -->
+<section class="infos" id="infos">
+  <div class="infos-inner">
+    <div class="reveal">
+      <h2>On livre chez vous 🛵</h2>
+      <p>
+        Profitez de nos spécialités sans bouger de chez vous. Livraison rapide et soignée dans le secteur.
+      </p>
+      <div class="livraison-badge">🎁 Livraison gratuite à partir de 10€</div>
+      <br><br>
+      <p style="font-size:0.9rem;">
+        📍 105b av Abel Gance, La Garde<br>
+        📞 06.04.07.45.81
+      </p>
+    </div>
+    <div class="horaires-card reveal">
+      <h3>🕐 Nos horaires</h3>
+      <div class="horaire-row">
+        <span class="jour">Lun — Ven</span>
+        <span class="heure">11h → 14h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="jour">Jeu — Sam</span>
+        <span class="heure">18h → 21h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="jour">Dimanche</span>
+        <span class="fermé">Fermé</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>Retrouvez-nous <em>partout</em></h2>
+    <p>Sur les réseaux, par téléphone, ou directement au food truck — on est là pour vous !</p>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="label">Téléphone</div>
+        <div class="value">06.04.07.45.81</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Adresse</div>
+        <div class="value">105b av Abel Gance, La Garde</div>
+      </div>
+    </div>
+    <div class="socials">
+      <a href="#" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+      <a href="#" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Kat'Delizia</strong> — Food Truck familial · Tous nos produits sont frais · Fait avec ❤️</p>
+</footer>
+
+<script>
+  // ===== CURSEUR =====
+  const cursor = document.getElementById('cursor');
+  const dot = document.getElementById('cursor-dot');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%,-50%) scale(1.5)');
+    el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%,-50%) scale(1)');
+  });
+
+  // ===== TABS MENU =====
+  const tabs = document.querySelectorAll('.tab-btn');
+  const items = document.querySelectorAll('.menu-item');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.cat;
+      items.forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+          item.classList.add('visible');
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+    });
+  });
+
+  // ===== SCROLL REVEAL =====
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
